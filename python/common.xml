@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+        <capture_type>1</capture_type>
+        <agent_queue_num>1</agent_queue_num>
+        <netlink_queue_num>1</netlink_queue_num>
+        <nf_queue_num>2</nf_queue_num>
+        <normal_record_pro_num>0</normal_record_pro_num>
+        <alarm_pro_num>2</alarm_pro_num>
+        <agent_listen_port>9999</agent_listen_port>
+        <packet_shm_queue_len>50</packet_shm_queue_len>
+        <record_shm_queue_len>100</record_shm_queue_len>
+        
+        <agent_config>
+            <client_num>0</client_num>
+            <total_queue_num>0</total_queue_num>
+            <client_list>
+                <client1>
+                    <client_ip>192.168.1.1</client_ip>
+                    <queue_num>1</queue_num>
+                </client1>
+            </client_list>
+        </agent_config>
+        <debug_mode>0</debug_mode>
+</configuration>
