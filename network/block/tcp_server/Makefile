@@ -9,7 +9,7 @@ DEBUG = -g
 CFLAGS = $(DEBUG) -c
 SRCS = $(wildcard $(SRC)/*.c)
 OBJS = $(patsubst %.c, %.o, $(SRCS))
-TARGET = sock_server
+TARGET = tcp_server
 LIBS = -lsock
 
 HEADER_PATH = -I$(MPATH)/include -I$(SOCK)/include

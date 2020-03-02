@@ -2,14 +2,13 @@ MAIN_PATH = ..
 MPATH = .
 SRC = $(MPATH)/src
 SOCK = $(MAIN_PATH)/sock_stream
-OUTPUT_PATH = $(MAIN_PATH)/debug
 
 CXX = g++
 DEBUG = -g
 CFLAGS = $(DEBUG) -c
 SRCS = $(wildcard $(SRC)/*.c)
 OBJS = $(patsubst %.c, %.o, $(SRCS))
-TARGET = sock_client
+TARGET = tcp_client
 LIBS = -lsock
 
 HEADER_PATH = -I$(MPATH)/include -I$(SOCK)/include

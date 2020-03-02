@@ -1,7 +1,7 @@
 MPATH = .
 MAIN_PATH = ..
 SRC = $(MPATH)/src
-OUTPUT_PATH = $(MAIN_PATH)/debug
+OUTPUT_PATH = $(MAIN_PATH)
 
 # make a static library
 AR = ar -rc
@@ -21,9 +21,6 @@ $(OBJS) : %.o : %.c
 	$(CXX) $(CFLAGS) $< -o $@ $(HEADER_PATH)
 
 .PHONY : clean copy
-
-copy :
-	cp -a $(TARGET) $(OUTPUT_PATH)/lib
 
 clean : 
 	rm -rf $(TARGET) $(OBJS)
