@@ -1,11 +1,30 @@
-#include <linux/init.h>
-#include <linux/module.h>
-#include <linux/kernel.h>
-#include <linux/types.h>
-#include <linux/netfilter.h>
-#include <linux/netfilter_ipv4.h>
+#include "hook_test.h"
 
 static struct nf_hook_ops nfho;
+
+#if 1
+static size_t _format_mac_addr(char *buf, int buflen,
+    const unsigned char *addr, int len)
+{
+    int i;
+    char *cp = buf;
+
+    for (i = 0; i < len; i++) 
+    {
+        cp += scnprintf(cp, buflen - (cp - buf), "%02x", addr[i]);
+        if (i == len - 1)
+            break;
+        cp += scnprintf(cp, buflen - (cp - buf), ":");
+    }
+    return cp - buf;
+}
+#endif 
+static char *print_mac(char *buffer, const unsigned char *addr)
+{
+    _format_mac_addr(buffer, MAC_BUF_SIZE, addr, ETH_ALEN);          
+    
+    return buffer;
+}
 
 static unsigned int hook_func(
     const struct nf_hook_ops *ops, 
@@ -14,14 +33,12 @@ static unsigned int hook_func(
     const struct net_device *out,
     const struct nf_hook_state *state)
 {
-    char dmac[ETH_ALEN];
+    u8 haddr[ETH_ALEN];
+    char mac[MAC_BUF_SIZE];
 
-    struct ethhdr *eth_hdr = (struct ethhdr *)skb_mac_header(skb);
-    if(skb_mac_header_was_set(skb))
-    {
-        memcpy(dmac, eth_hdr->h_dest, ETH_ALEN);
-        printk("mac address : %s\n",dmac);
-    }
+    eth_header_parse(skb,haddr);
+    print_mac(mac,haddr);
+    printk("mac : %s\n",mac);
     return NF_ACCEPT;
 }
 
