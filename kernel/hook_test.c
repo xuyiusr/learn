@@ -2,7 +2,13 @@
 
 static struct nf_hook_ops nfho;
 
-#if 1
+int eth_header_parse_dstmac(struct sk_buff *skb, u8 *haddr)
+{
+    struct ethhdr *eth = eth_hdr(skb);
+    memcpy(haddr, eth->h_dest, ETH_ALEN);
+    return ETH_ALEN;
+}
+
 static size_t _format_mac_addr(char *buf, int buflen,
     const unsigned char *addr, int len)
 {
@@ -18,7 +24,7 @@ static size_t _format_mac_addr(char *buf, int buflen,
     }
     return cp - buf;
 }
-#endif 
+
 static char *print_mac(char *buffer, const unsigned char *addr)
 {
     _format_mac_addr(buffer, MAC_BUF_SIZE, addr, ETH_ALEN);          
@@ -36,7 +42,7 @@ static unsigned int hook_func(
     u8 haddr[ETH_ALEN];
     char mac[MAC_BUF_SIZE];
 
-    eth_header_parse(skb,haddr);
+    eth_header_parse_dstmac(skb,haddr);
     print_mac(mac,haddr);
     printk("mac : %s\n",mac);
     return NF_ACCEPT;
